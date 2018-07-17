@@ -16,6 +16,14 @@ let gh = new GitHub({
 	password: GITHUB_PASSWORD
 });
 
+// utility functions
+function buildFilters(args) {
+	let filters = [];
+	filters.push({ key: 'state', value: args.state });
+	filters = filters.concat(args.labels.map(l => { return { key: 'labels', value: l }; }));
+	return filters;
+}
+
 function issueContainsLabel(issue, label) {
 	return issue.labels.reduce((a, e) => {
 		return a || e.name == label;
@@ -27,7 +35,7 @@ function scrapeIssues(opts) {
 	let repo = opts.repo;
 	let listOpts = {
 		state: 'all',
-		labels: opts.filters.filter((f) => f.key == 'label').map((f) => f.value).join()
+		labels: opts.filters.filter((f) => f.key == 'labels').map((f) => f.value).join()
 	};
 	console.log(listOpts);
 	return gh.getIssues(owner, repo).listIssues(listOpts).then((issues) => {
@@ -39,16 +47,18 @@ function scrapeIssues(opts) {
 	});
 }
 
-let scrapeOpts = {
-	owner: 'PushTracker',
-	repo: 'EvalApp',
-	filters: [
-		{
-			key: 'label',
-			value: 'requirement-SRS-5-A'
-		}
-	]
-};
+function printIssue(issue) {
+	let i = {
+		title: issue.title,
+		number: issue.number,
+		labels: issue.labels.map(l => l.name),
+		state: issue.state,
+		created: issue.created_at,
+		last_updated: issue.updated_at,
+		closed: issue.closed_at
+	};
+	console.log(i);
+}
 
 // set up command line arg parsing
 let parser = new ArgumentParser({
@@ -71,21 +81,30 @@ parser.addArgument(
 	}
 );
 parser.addArgument(
-	[ '-l', '--label' ],
+	[ '-s', '--state' ],
+	{
+		defaultValue: 'all',
+		help: 'The state of the issues',
+		choices: ['all', 'open', 'closed']
+	}
+);
+parser.addArgument(
+	[ '-l', '--labels' ],
 	{
 		action: 'append',
 		defaultValue: [],
-		help: 'A label to be filtered on'
+		help: 'Adds a label to the set of labels be filtered on'
 	}
 );
 
+// parse the arguments
 var args = parser.parseArgs();
-
+// now actually find the issues
 scrapeIssues({
 	owner: args.owner,
 	repo: args.repo,
-	filters: args.label.map(l => { return { key: 'label', value: l }; })
+	filters: buildFilters(args)
 }).then((issues) => {
-	console.log(issues.map(i => i.number));
+	issues.map(i => printIssue(i));
 });
 
