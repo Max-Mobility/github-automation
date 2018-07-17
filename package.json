@@ -1,0 +1,24 @@
+{
+  "name": "github-automation",
+  "version": "1.0.0",
+  "description": "Automation tools for Design Control Procedures and Documents with Github Integration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/max-mobility/github-automation.git"
+  },
+  "keywords": [
+    "github",
+    "automation",
+    "node.js"
+  ],
+  "author": "William Emfinger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/max-mobility/github-automation/issues"
+  },
+  "homepage": "https://github.com/max-mobility/github-automation#readme"
+}
