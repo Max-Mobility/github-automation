@@ -20,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/max-mobility/github-automation/issues"
   },
-  "homepage": "https://github.com/max-mobility/github-automation#readme"
+  "homepage": "https://github.com/max-mobility/github-automation#readme",
+  "dependencies": {
+    "argparse": "^1.0.10",
+    "es6-promise": "^4.2.4",
+    "github-api": "^3.0.0",
+    "underscore": "^1.9.1"
+  }
 }
