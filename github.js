@@ -1,4 +1,5 @@
 const GitHub = require('github-api');
+const moment = require('moment');
 
 let GITHUB_USERNAME = process.env.GITHUB_USERNAME;
 let GITHUB_PASSWORD = process.env.GITHUB_PASSWORD;
@@ -16,7 +17,9 @@ let gh = new GitHub({
 function buildFilters(args) {
 	let filters = [];
 	filters.push({ key: 'state', value: args.state });
-	filters = filters.concat(args.labels.map(l => { return { key: 'labels', value: l }; }));
+	if (args.labels && args.labels.length) {
+		filters = filters.concat(args.labels.map(l => { return { key: 'labels', value: l }; }));
+	}
 	return filters;
 }
 
@@ -26,6 +29,22 @@ function issueContainsLabel(issue, label) {
 	}, false);
 }
 
+function scrapeLabels(opts) {
+	let owner = opts.owner;
+	let repo = opts.repo;
+	return gh.getIssues(owner, repo).listLabels().then((labels) => {
+		labels = labels.data;
+		return labels.filter((l) => {
+			let pattern = new RegExp(opts.patterns.labels);
+			let test = pattern.test(l.name);
+			return test;
+		});
+	}).catch((err) => {
+		console.log(`Couldn not get issues: ${err}`);
+		return [];
+	});
+}
+
 function scrapeIssues(opts) {
 	let owner = opts.owner;
 	let repo = opts.repo;
@@ -33,10 +52,14 @@ function scrapeIssues(opts) {
 		state: 'all',
 		labels: opts.filters.filter((f) => f.key == 'labels').map((f) => f.value).join()
 	};
-	console.log(listOpts);
 	return gh.getIssues(owner, repo).listIssues(listOpts).then((issues) => {
 		issues = issues.data;
-		return issues;
+		return issues.filter((i) => {
+			return i.labels.reduce((t, l) => {
+				let pattern = new RegExp(opts.patterns.labels);
+				return t || pattern.test(l.name);
+			}, false);
+		});
 	}).catch((err) => {
 		console.log(`Couldn not get issues: ${err}`);
 		return [];
@@ -49,9 +72,9 @@ function transformIssue(issue) {
 		number: issue.number,
 		labels: issue.labels.map(l => l.name),
 		state: issue.state,
-		created: issue.created_at,
-		last_updated: issue.updated_at,
-		closed: issue.closed_at
+		created: moment(issue.created_at).format("YYYY-MM-DD"),//.calendar(),
+		last_updated: moment(issue.updated_at).format("YYYY-MM-DD"),//.calendar(),
+		closed: moment(issue.closed_at).format("YYYY-MM-DD")//.calendar(),
 	};
 }
 
@@ -61,5 +84,6 @@ module.exports = {
 	buildFilters,
 	issueContainsLabel,
 	scrapeIssues,
+	scrapeLabels,
 	transformIssue
 };

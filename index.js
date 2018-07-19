@@ -41,6 +41,13 @@ parser.addArgument(
 		help: 'Adds a label to the set of labels be filtered on'
 	}
 );
+parser.addArgument(
+	[ '-p', '--pattern' ],
+	{
+		defaultValue: 'requirement-SRS-',
+		help: 'A pattern that the labels on the issues should match'
+	}
+);
 
 // parse the arguments
 var args = parser.parseArgs();
@@ -53,9 +60,18 @@ github.scrapeIssues({
 }).then((issues) => {
 	issues.map(i => github.printIssue(i));
 });
-*/
 
-generate_table.generateTable(args.owner, args.repo, args.labels).then((table) => {
+github.scrapeIssues({
+	owner: args.owner,
+	repo: args.repo,
+	filters: github.buildFilters(args),
+	patterns: {
+		labels: "SRS"
+	}
+}).then((labels) => {
+	console.log(labels.map((l) => l.title));
+});
+*/
+generate_table.generateTable(args.owner, args.repo, args.pattern).then((table) => {
 	console.log(table);
 });
-

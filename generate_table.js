@@ -72,18 +72,29 @@ function naturalCompare(a, b) {
 	return ax.length - bx.length;
 }
 
-function generateMap(owner, repo, labels) {
-	let map = {};
-	var tasks = labels.map((l) => {
-		return gh.scrapeIssues({
-			owner,
-			repo,
-			filters: gh.buildFilters({ labels: [l], state: 'ALL' })
-		}).then((issues) => {
-			map[l] = issues.map((i) => gh.transformIssue(i));
+function generateMap(owner, repo, pattern) {
+	return gh.scrapeIssues({
+		owner,
+		repo,
+		filters: gh.buildFilters({ state: 'ALL' }),
+		patterns: {
+			labels: pattern
+		}
+	}).then((issues) => {
+		var map = {};
+		issues.map((i) => {
+			var labels = i.labels.filter((l) => {
+				var p = new RegExp(pattern);
+				return p.test(l.name);
+			});
+			labels.map((l) => {
+				if (!map[l.name]) {
+					map[l.name] = [gh.transformIssue(i)];
+				} else {
+					map[l.name].push(gh.transformIssue(i));
+				}
+			});
 		});
-	});
-	return Promise.all(tasks).then(() => {
 		return map;
 	});
 }
@@ -101,9 +112,9 @@ function makeRequirements(map) {
 }
 
 // takes as input a list of labels - finds all the issues that have
-// those labels and puts them into a table
-function generateTable(owner, repo, labels) {
-	return generateMap(owner, repo, labels).then((map) => {
+// labels matching pattern and puts them into a table
+function generateTable(owner, repo, pattern) {
+	return generateMap(owner, repo, pattern).then((map) => {
 		return makeRequirements(map);
 	}).then((reqs) => {
 		console.log(reqs);
