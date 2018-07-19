@@ -1,5 +1,9 @@
-const github = require('./github');
+// libraries
 const ArgumentParser = require('argparse').ArgumentParser;
+
+// our code
+const github = require('./github');
+const generate_table = require('./generate_table');
 
 // set up command line arg parsing
 let parser = new ArgumentParser({
@@ -41,11 +45,17 @@ parser.addArgument(
 // parse the arguments
 var args = parser.parseArgs();
 // now actually find the issues
+/*
 github.scrapeIssues({
 	owner: args.owner,
 	repo: args.repo,
 	filters: github.buildFilters(args)
 }).then((issues) => {
 	issues.map(i => github.printIssue(i));
+});
+*/
+
+generate_table.generateTable(args.owner, args.repo, args.labels).then((table) => {
+	console.log(table);
 });
 

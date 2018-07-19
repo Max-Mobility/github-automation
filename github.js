@@ -43,8 +43,8 @@ function scrapeIssues(opts) {
 	});
 }
 
-function printIssue(issue) {
-	let i = {
+function transformIssue(issue) {
+	return {
 		title: issue.title,
 		number: issue.number,
 		labels: issue.labels.map(l => l.name),
@@ -53,7 +53,6 @@ function printIssue(issue) {
 		last_updated: issue.updated_at,
 		closed: issue.closed_at
 	};
-	console.log(i);
 }
 
 // what we're exporting:
@@ -62,5 +61,5 @@ module.exports = {
 	buildFilters,
 	issueContainsLabel,
 	scrapeIssues,
-	printIssue
+	transformIssue
 };
