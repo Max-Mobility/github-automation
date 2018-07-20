@@ -1,0 +1,21 @@
+<table>
+  <tr>
+	<th>Software Requirement</th>
+	<th>Github Issues</th>
+	<th>Creation</th>
+	<th>Completion</th>
+  </tr>
+  {{#each requirements}}
+  <tr>
+	<th rowspan={{issues.length}}>{{label}}</th>
+	{{#each issues}}
+	{{#not-equals @index 0}}
+  <tr>
+	{{/not-equals}}
+	<td>{{number}}: {{title}}</td>
+	<td>{{created}}</td>
+	<td>{{closed}}</td>
+  </tr>
+  {{/each}}
+  {{/each}}
+</table>

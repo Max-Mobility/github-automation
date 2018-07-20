@@ -79,6 +79,60 @@ function scrapeIssues(opts) {
 	});
 }
 
+function makeRequirement(pattern, label, issues) {
+	// requirement definition here
+	const patt = new RegExp(pattern + "-(\\d+-\\w+)");
+	const num = patt.exec(label.name);
+	return {
+		label: label.name,
+		number: num && num[1],
+		name: label.description,
+		issues: issues.map((i) => transformIssue(i)),
+		reports: issues.map((i) => issueToReport(pattern, i))
+	};
+}
+
+function issueToReport(pattern, issue) {
+	return {
+		number: issue.number,
+		requirements: issue.labels.filter((l) => {
+			const p = new RegExp(pattern);
+			return p.test(l.name);
+		}),
+		description: issue.title,
+		// TODO:
+		tests: [
+			{
+				name: "Test 1",
+				method: "Steps for test 1 here",
+				results: [
+					"PASS", "FAIL", "PASS", '','','',''
+				],
+				finalResult() {
+					return this.results.indexOf('FAIL') > -1 ? 'FAIL' : 'PASS'
+				}
+			},
+			{
+				name: "Test 2",
+				method: "Steps for test 2 here",
+				results: [
+					"PASS", "PASS", "PASS", '','','',''
+				],
+				finalResult() {
+					return this.results.indexOf('FAIL') > -1 ? 'FAIL' : 'PASS'
+				}
+			},
+		],
+		method: 'WRITE METHOD HERE',
+		acceptanceCriteria: 'WRITE ACCEPTANCE CRITERIA HERE',
+		startDate: moment().format('YYYY-MM-DD'),
+		endDate: moment().format('YYYY-MM-DD'),
+		testerName: 'WRITE YOUR NAME HERE',
+		output: 'OUTPUT TABLE HERE',
+		notes: 'WRITE YOUR NOTES HERE'
+	};
+}
+
 function transformIssue(issue) {
 	return {
 		title: issue.title,
@@ -98,5 +152,7 @@ module.exports = {
 	issueContainsLabel,
 	scrapeIssues,
 	scrapeLabels,
-	transformIssue
+	transformIssue,
+	makeRequirement,
+	issueToReport,
 };

@@ -1,0 +1,79 @@
+<table>
+  <tr>
+	<th>Field</th>
+	<th colspan=10>Description</th>
+  </tr>
+  <tr>
+	<td>Requirement IDs</td>
+	<td colspan=10>
+	  {{#each requirements}}
+	  <span>{{name}}: {{description}}</span>
+	  {{/each}}
+	</td>
+  </tr>
+  <tr>
+	<td>Revision</td>
+	<td colspan=10>{{revision}}</td>
+  </tr>
+  <tr>
+	<td>Description</td>
+	<td colspan=10>{{description}}</td>
+  </tr>
+  <tr>
+	<td rowspan={{tests.length}}>Method</td>
+	{{#each tests}}
+	{{#not-equals @index 0}}
+	<tr>
+	{{/not-equals}}
+	<td colspan=2>{{name}}</td>
+	<td colspan=8>{{method}}</td>
+  </tr>
+	{{/each}}
+  <tr>
+	<td>Acceptance Criteria</td>
+	<td colspan=10>{{acceptanceCriteria}}</td>
+  </tr>
+  <tr>
+	<td>Start / End Dates</td>
+	<td colspan=5>{{startDate}}</td>
+	<td colspan=5>{{endDate}}</td>
+  </tr>
+  <tr>
+	<td>Tester Name</td>
+	<td colspan=10>{{testerName}}</td>
+  </tr>
+  <tr>
+	<td rowspan={{#add tests.length 2}}{{/add}} colspan=1>Output</td>
+	<td rowspan=2 colspan=1> </td>
+	<td colspan=7>Sample quantity and test result</td>
+	<td rowspan=2 colspan=1>Pass/Fail</td>
+  </tr>
+  <tr>
+	<td>#1</td>
+	<td>#2</td>
+	<td>#3</td>
+	<td>#4</td>
+	<td>#5</td>
+	<td>#6</td>
+	<td>#7</td>
+  </tr>
+  {{#each tests}}
+  <tr>
+	<td>{{name}}</td>
+	{{#each results}}
+	<td>{{this}}</td>
+	{{/each}}
+	<td>{{#resultsPass results}}{{/resultsPass}}</td>
+  </tr>
+  {{/each}}
+  <tr>
+  </tr>
+  <tr>
+	<td>Results</td>
+	<td colspan=10>{{#reportResults tests}}{{/reportResults}}</td>
+  </tr>
+  <tr>
+	<td>Notes</td>
+	<td colspan=10>{{notes}}</td>
+  </tr>
+</table>

@@ -1,0 +1,19 @@
+<html>
+  <head>
+	<meta charset="utf8">
+	<title>{{softwareName}}</title>
+	<style>
+	  {{style}}
+	</style>
+  </head>
+  <body>
+	<h1>Software Verification and Validation Test Reports</h1>
+	{{#each tests}}
+	<h2>SEA-SVR-{{number}} {{name}}</h2>
+	{{#each reports}}
+	<h3>SEA-SVR-{{../number}}-{{number}}</h3>
+	{{> report-table}}
+	{{/each}}
+	{{/each}}
+  </body>
+</html>

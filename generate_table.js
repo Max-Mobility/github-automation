@@ -1,4 +1,5 @@
 // library code
+const fs = require('fs');
 const _ = require('underscore');
 const handlebars = require('handlebars');
 
@@ -21,41 +22,42 @@ handlebars.registerHelper('equals', function(a,b, options) {
 	}
 });
 
-handlebars.registerPartial('issueTemplate', [
-	"<td>{{number}}: {{title}}</td>",
-	"<td>{{created}}</td>",
-	"<td>{{closed}}</td>",
-].join('\n'));
+handlebars.registerHelper('resultsPass', function(results, options) {
+	if (results.indexOf('FAIL') > -1) {
+		return 'FAIL';
+	} else {
+		return 'PASS';
+	}
+});
 
-handlebars.registerPartial('requirementTemplate', [
-	"<tr>",
-	"<th rowspan={{issues.length}}>{{label}}</th>",
-	"{{#each issues}}",
-	"{{#not-equals @index 0}}",
-	"<tr>",
-	"{{/not-equals}}",
-	"{{#> issueTemplate}}",
-	"</tr><tr><th colspan=4>ERROR: Couldn't find issueTemplate!</th>",
-	"{{/issueTemplate}}",
-	"</tr>",
-	"{{/each}}",
-].join('\n'));
+handlebars.registerHelper('reportResults', function(tests, options) {
+	var passes = tests.reduce((p, t) => {
+		return p && (t.results.indexOf('FAIL') == -1);
+	}, true);
+	if (passes) {
+		return 'PASS';
+	} else {
+		return 'FAIL';
+	}
+});
 
-tableTemplate = handlebars.compile([
-	"<table>",
-	"<tr>",
-	"<th>Software Requirement</th>",
-	"<th>Github Issues</th>",
-	"<th>Creation</th>",
-	"<th>Completion</th>",
-	"</tr>",
-	"{{#each requirements}}",
-	"{{#> requirementTemplate}}",
-	"<tr><th colspan=4>ERROR: Couldn't find requirementTemplate!</th></tr>",
-	"{{/requirementTemplate}}",
-	"{{/each}}",
-	"</table>",
-].join('\n'));
+handlebars.registerHelper('add', function(a, b, options) {
+	return `${a+b}`;
+});
+
+// requirements
+//   templates
+const requirementTableTemplateText = fs.readFileSync('./static/requirements-table.html').toString();
+const requirementTableTemplate = handlebars.compile(requirementTableTemplateText);
+
+// testing
+//   partials
+const reportTableText = fs.readFileSync('./static/report-table.html').toString();
+handlebars.registerPartial('report-table', reportTableText);
+//   templates
+const testReportText = fs.readFileSync('./static/test-report.html').toString();
+const testReportTemplate = handlebars.compile(testReportText);
+
 
 function naturalCompare(a, b) {
 	var ax = [], bx = [];
@@ -81,19 +83,13 @@ function generateMap(owner, repo, pattern) {
 			labels: pattern
 		}
 	}).then((_labels) => {
-		labels = _labels.map((l) => l.name);
+		labels = _labels;
 		var tasks = labels.map((l) => {
 			return gh.scrapeIssues({
 				owner,
 				repo,
-				filters: gh.buildFilters({ state: 'ALL', labels: [l] })
-			}).then((issues) => {
-				// requirement definition here
-				return {
-					label: l,
-					issues: issues.map((i) => gh.transformIssue(i))
-				};
-			});
+				filters: gh.buildFilters({ state: 'ALL', labels: [l.name] })
+			}).then((issues) => gh.makeRequirement(pattern, l, issues));
 		});
 		return Promise.all(tasks); // returns array of requirements
 	}).then((reqs) => {
@@ -105,16 +101,28 @@ function generateMap(owner, repo, pattern) {
 
 // takes as input a list of labels - finds all the issues that have
 // labels matching pattern and puts them into a table
-function generateTable(owner, repo, pattern) {
+function generateRequirementTable(owner, repo, pattern) {
 	return generateMap(owner, repo, pattern).then((reqs) => {
-		return tableTemplate({ requirements: reqs });
+		return requirementTableTemplate({ requirements: reqs });
+	});
+}
+
+// takes as input a list of labels - finds all the issues that have
+// labels matching pattern and puts them into a table
+function generateTestReportTable(owner, repo, pattern, revision, softwareName) {
+	return generateMap(owner, repo, pattern).then((reqs) => {
+		// tests should be for a requirement and should have reports
+		return testReportTemplate({
+			revision,
+			softwareName,
+			tests: reqs
+		});
 	});
 }
 
 // what are we exporting
 module.exports = {
-	tableTemplate,
-	generateTable,
-	generateMap
+	generateRequirementTable,
+	generateTestReportTable,
 };
 

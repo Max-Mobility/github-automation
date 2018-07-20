@@ -51,7 +51,7 @@ parser.addArgument(
 parser.addArgument(
 	[ '-p', '--pattern' ],
 	{
-		defaultValue: 'requirement-SRS',
+		defaultValue: 'SEA-SRS',
 		help: 'A pattern that the labels on the issues should match'
 	}
 );
@@ -64,7 +64,14 @@ var style = fs.readFileSync('./static/style.css', 'utf8');
 var args = parser.parseArgs();
 
 // now actually create the table
-generate_table.generateTable(args.owner, args.repo, args.pattern).then((table) => {
+//generate_table.generateRequirementTable(args.owner, args.repo, args.pattern).then((table) => {
+generate_table.generateTestReportTable(
+	args.owner,
+	args.repo,
+	args.pattern,
+	'A',
+	'Smart Evaluation App'
+).then((table) => {
 	// turn table into html
 	const title = `${moment().format("YYYY-MM-DD")}.${args.pattern}`;
 	const html = handlebars.compile(indexTempl)({

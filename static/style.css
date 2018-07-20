@@ -11,8 +11,8 @@ html, body {
     box-sizing: border-box;
 }
 table {
-	height: 100%;
-	width: 100%;
+	height: auto;
+	width: auto;
 	vertical-align: middle;
 	horizontal-align: center;
 }
@@ -22,6 +22,13 @@ table, th, td {
     border-collapse: collapse;
 }
 th, td {
+	white-space: pre;
     padding: 5px;
     text-align: left;
+}
+th {
+	font-size: 10px;
+	background-color: black;
+	color: white;
+	text-color: white;
 }
