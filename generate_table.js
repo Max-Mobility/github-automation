@@ -117,7 +117,6 @@ function generateTable(owner, repo, pattern) {
 	return generateMap(owner, repo, pattern).then((map) => {
 		return makeRequirements(map);
 	}).then((reqs) => {
-		console.log(reqs);
 		return tableTemplate({ requirements: reqs });
 	});
 }
