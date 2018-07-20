@@ -1,12 +1,20 @@
 html, body {
     margin: 0;
     padding: 0;
+	height: 100%;
+	width: 100%;
     font-family: 'Sackers Gothic Std';
     font-weight: 500;
     font-size: 7px;
     background: rgb(241,241,241);
     -webkit-print-color-adjust: exact;
     box-sizing: border-box;
+}
+table {
+	height: 100%;
+	width: 100%;
+	vertical-align: middle;
+	horizontal-align: center;
 }
 table, th, td {
     font-size: 7px;
