@@ -49,14 +49,6 @@ parser.addArgument(
 	}
 );
 parser.addArgument(
-	[ '-l', '--labels' ],
-	{
-		action: 'append',
-		defaultValue: [],
-		help: 'Adds a label to the set of labels be filtered on'
-	}
-);
-parser.addArgument(
 	[ '-p', '--pattern' ],
 	{
 		defaultValue: 'requirement-SRS',
@@ -81,10 +73,13 @@ generate_table.generateTable(args.owner, args.repo, args.pattern).then((table) =
 		table
 	});
 	const options = { format: 'Letter' };
-	const fileName = `./${title}.pdf`;
-	pdf.create(html, options).toFile(fileName, function(err, res) {
+	const htmlName = `./${title}.html`;
+	fs.writeFileSync(htmlName, html);
+	console.log(`Wrote ${htmlName}.`);
+	const pdfName = `./${title}.pdf`;
+	pdf.create(html, options).toFile(pdfName, function(err, res) {
 		if (err) return console.log(err);
-		console.log(`Wrote ${fileName} - opening now`);
-		exec(getCommandLine() + ' ' + fileName);
+		console.log(`Wrote ${pdfName} - opening now`);
+		exec(getCommandLine() + ' ' + pdfName);
 	});
 });
