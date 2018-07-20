@@ -70,6 +70,7 @@ var style = fs.readFileSync('./static/style.css', 'utf8');
 
 // parse the arguments
 var args = parser.parseArgs();
+
 // now actually create the table
 generate_table.generateTable(args.owner, args.repo, args.pattern).then((table) => {
 	// turn table into html
@@ -83,7 +84,7 @@ generate_table.generateTable(args.owner, args.repo, args.pattern).then((table) =
 	const fileName = `./${title}.pdf`;
 	pdf.create(html, options).toFile(fileName, function(err, res) {
 		if (err) return console.log(err);
+		console.log(`Wrote ${fileName} - opening now`);
 		exec(getCommandLine() + ' ' + fileName);
-		//console.log(res); // { filename: '/app/businesscard.pdf' }
 	});
 });

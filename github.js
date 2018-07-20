@@ -32,13 +32,21 @@ function issueContainsLabel(issue, label) {
 function scrapeLabels(opts) {
 	let owner = opts.owner;
 	let repo = opts.repo;
-	return gh.getIssues(owner, repo).listLabels().then((labels) => {
+	let listOpts = {
+		per_page: 10000
+	};
+	return gh.getIssues(owner, repo).listLabels(listOpts).then((labels) => {
 		labels = labels.data;
-		return labels.filter((l) => {
-			let pattern = new RegExp(opts.patterns.labels);
-			let test = pattern.test(l.name);
-			return test;
-		});
+		if (opts.patterns) {
+			if (opts.patterns.labels) {
+				return labels.filter((l) => {
+					let pattern = new RegExp(opts.patterns.labels);
+					let test = pattern.test(l.name);
+					return test;
+				});
+			}
+		}
+		return labels;
 	}).catch((err) => {
 		console.log(`Couldn not get issues: ${err}`);
 		return [];
@@ -54,12 +62,17 @@ function scrapeIssues(opts) {
 	};
 	return gh.getIssues(owner, repo).listIssues(listOpts).then((issues) => {
 		issues = issues.data;
-		return issues.filter((i) => {
-			return i.labels.reduce((t, l) => {
-				let pattern = new RegExp(opts.patterns.labels);
-				return t || pattern.test(l.name);
-			}, false);
-		});
+		if (opts.patterns) {
+			if (opts.patterns.labels) {
+				return issues.filter((i) => {
+					return i.labels.reduce((t, l) => {
+						let pattern = new RegExp(opts.patterns.labels);
+						return t || pattern.test(l.name);
+					}, false);
+				});
+			}
+		}
+		return issues;
 	}).catch((err) => {
 		console.log(`Couldn not get issues: ${err}`);
 		return [];
