@@ -10,6 +10,7 @@ const _ = require('lodash');
 // our libs
 const gh = require('./github');
 const files = require('./lib/files');
+const utils = require('./lib/utils');
 const inquirer  = require('./lib/inquirer');
 
 // command line arguments
@@ -53,25 +54,8 @@ parser.addArgument(
 // parse the arguments
 var args = parser.parseArgs();
 
-// where we save the reports
-const dir = 'reports'
 // where we save the requirement labels
 const reqFileName = 'requirements.json';
-
-const getReports = async () => {
-	let reports = [];
-	// check directory
-	if (!files.directoryExists(dir)) {
-		console.log(chalk.red('No '+dir+' folder found - making a new one!'));
-		files.makeDirectory(dir);
-	} else {
-		const filelist = fs.readdirSync(dir);
-		reports = filelist.map((fname) => {
-			return JSON.parse(fs.readFileSync(dir + '/' + fname));
-		});
-	}
-	return reports;
-}
 
 const getRequirements = async () => {
 	let reqs = [];
@@ -88,10 +72,13 @@ const getRequirements = async () => {
 			return {
 				name: l.name + ': ' + l.description,
 				short: l.name,
-				value: l.name
+				value: {
+					name: l.name,
+					description: l.description
+				}
 			}
 		});
-		fs.writeFileSync(reqFileName, JSON.stringify(reqs));
+		fs.writeFileSync(reqFileName, JSON.stringify(reqs, null, 2));
 		console.log("Wrote " + reqFileName);
 	} else {
 		reqs = JSON.parse(fs.readFileSync(reqFileName));
@@ -100,9 +87,14 @@ const getRequirements = async () => {
 }
 
 const run = async () => {
+	// get the requirements
 	let requirements = await getRequirements();
-	let reports = await getReports();
+	// where we save the reports
+	const dir = 'reports'
+	let reports = utils.getReports(dir);
+	// make a new report
 	const report = await inquirer.makeTestReport(requirements);
+	// now output the new report
 	let fname = dir + "/SEA-SVR-" + report.testNumber + "-" + report.revision + ".json";
 	if (fs.existsSync(fname)) {
 		const suffix = ' (updated)';

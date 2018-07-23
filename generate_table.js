@@ -34,8 +34,10 @@ handlebars.registerHelper('resultsPass', function(results, options) {
 handlebars.registerHelper('resultColor', function(results, options) {
 	if (results.indexOf('FAIL') > -1) {
 		return 'red';
-	} else {
+	} else if (results.indexOf('PASS') > -1) {
 		return 'green';
+	} else {
+		return 'gray';
 	}
 });
 
@@ -52,7 +54,7 @@ handlebars.registerHelper('testColor', function(tests, options) {
 
 handlebars.registerHelper('reportResults', function(tests, options) {
 	var passes = tests.reduce((p, t) => {
-		return p && (t.results.indexOf('FAIL') == -1);
+		return p && t.finalResult;
 	}, true);
 	if (passes) {
 		return 'PASS';
@@ -105,7 +107,7 @@ function generateMap(owner, repo, pattern) {
 
 // takes as input a list of labels - finds all the issues that have
 // labels matching pattern and puts them into a table
-function generateRequirementHtml(owner, repo, pattern) {
+function scrapeRequirementHtml(owner, repo, pattern) {
 	return generateMap(owner, repo, pattern).then((reqs) => {
 		return requirementTableTemplate({ requirements: reqs });
 	});
@@ -113,7 +115,7 @@ function generateRequirementHtml(owner, repo, pattern) {
 
 // takes as input a list of labels - finds all the issues that have
 // labels matching pattern and puts them into a table
-function generateReportHtml(owner, repo, pattern) {
+function scrapeReportHtml(owner, repo, pattern) {
 	return generateMap(owner, repo, pattern).then((reqs) => {
 		// tests should be for a requirement and should have reports
 		return testReportTemplate({
@@ -122,9 +124,20 @@ function generateReportHtml(owner, repo, pattern) {
 	});
 }
 
+// takes as input a list of labels - finds all the issues that have
+// labels matching pattern and puts them into a table
+function generateReportHtml(requirements) {
+	return new Promise((resolve, reject) => {
+		resolve(testReportTemplate({
+			tests: requirements
+		}));
+	});
+}
+
 // what are we exporting
 module.exports = {
-	generateRequirementHtml,
+	scrapeRequirementHtml,
+	scrapeReportHtml,
 	generateReportHtml,
 	generateMap,
 };

@@ -12,6 +12,7 @@ const toc = require('html-toc');
 
 // our code
 const github = require('./github');
+const utils = require('./lib/utils');
 const generate_table = require('./generate_table');
 
 function getCommandLine() {
@@ -70,10 +71,12 @@ var reqHtml = null;
 var reportHtml = null;
 
 // generate requirement table
-generate_table.generateRequirementHtml(args.owner, args.repo, args.pattern).then((_reqHtml) => {
+generate_table.scrapeRequirementHtml(args.owner, args.repo, args.pattern).then((_reqHtml) => {
 	reqHtml = _reqHtml;
 	// generate reports
-	return generate_table.generateReportHtml(args.owner, args.repo, args.pattern);
+	//return generate_table.scrapeReportHtml(args.owner, args.repo, args.pattern);
+	var reports = utils.getReports('reports');
+	return generate_table.generateReportHtml(reports);
 }).then((_reportHtml) => {
 	reportHtml = _reportHtml;
 	// now render everything
