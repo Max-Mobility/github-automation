@@ -51,8 +51,10 @@ li:before {
 	margin: 30;
 }
 .subtitle,
-.doc-info {
-	padding: 20 0 20 0;
+.doc-info,
+.section {
+	margin: 30;
+	padding: 0;
 }
 
 .revision-history {
@@ -71,4 +73,20 @@ li:before {
 .doc-number,
 .doc-fname{
 	font-size: 18;
+}
+
+.table-of-contents {
+	font-weight: bold;
+	font-size: 18;
+	margin: 30;
+}
+
+.executive-summary {
+	font-weight: bold;
+	font-size: 15;
+}
+
+.paragraph {
+	font-weight: normal;
+	font-size: 12;
 }
