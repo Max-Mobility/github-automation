@@ -7,7 +7,7 @@
 	<td>Requirement IDs</td>
 	<td colspan=10>
 	  {{#each requirements}}
-	  <span>{{name}}: {{description}}</span>
+	  <span style="horizontal-align: left">{{name}}: {{description}}</span>
 	  {{/each}}
 	</td>
   </tr>
@@ -61,16 +61,16 @@
   <tr>
 	<td>{{name}}</td>
 	{{#each results}}
-	<td>{{this}}</td>
+	<td style="color: {{#resultColor this}}{{/resultColor}}">{{this}}</td>
 	{{/each}}
-	<td>{{#resultsPass results}}{{/resultsPass}}</td>
+	<td style="color: {{#resultColor results}}{{/resultColor}}">{{#resultsPass results}}{{/resultsPass}}</td>
   </tr>
   {{/each}}
   <tr>
   </tr>
   <tr>
 	<td>Results</td>
-	<td colspan=10>{{#reportResults tests}}{{/reportResults}}</td>
+	<td colspan=10  style="color: {{#testColor tests}}{{/testColor}}">{{#reportResults tests}}{{/reportResults}}</td>
   </tr>
   <tr>
 	<td>Notes</td>

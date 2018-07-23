@@ -22,7 +22,7 @@ table, th, td {
     border-collapse: collapse;
 }
 th, td {
-	white-space: pre;
+	white-space: pre-line;
     padding: 5px;
     text-align: left;
 }

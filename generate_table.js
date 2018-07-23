@@ -30,6 +30,25 @@ handlebars.registerHelper('resultsPass', function(results, options) {
 	}
 });
 
+handlebars.registerHelper('resultColor', function(results, options) {
+	if (results.indexOf('FAIL') > -1) {
+		return 'red';
+	} else {
+		return 'green';
+	}
+});
+
+handlebars.registerHelper('testColor', function(tests, options) {
+	var passes = tests.reduce((p, t) => {
+		return p && (t.results.indexOf('FAIL') == -1);
+	}, true);
+	if (passes) {
+		return 'green';
+	} else {
+		return 'red';
+	}
+});
+
 handlebars.registerHelper('reportResults', function(tests, options) {
 	var passes = tests.reduce((p, t) => {
 		return p && (t.results.indexOf('FAIL') == -1);
