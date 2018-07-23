@@ -3,6 +3,7 @@ html, body {
     padding: 0;
 	height: 100%;
 	width: 100%;
+	max-width: 500px;
     font-family: 'Sackers Gothic Std';
     font-weight: 500;
     font-size: 7px;
@@ -23,8 +24,6 @@ table, th, td {
     border-collapse: collapse;
 }
 th, td {
-	white-space: pre-line;
-    padding: 5px;
     text-align: left;
 }
 th {
@@ -44,12 +43,41 @@ ol {
 	counter-reset: item;
 }
 
-li {
+ol li {
   display: block
 }
-li:before {
+ol li:before {
   content:counters(item, '.') '. ';
   counter-increment: item
+}
+
+ul {
+	padding: 0 15;
+	list-style-type: none;
+}
+ul li:before {
+	content: unset;
+	counter-increment: unset;
+}
+
+.methods-list,
+.requirements-list,
+.acceptance-criteria-list{
+	font-weight: normal;
+	padding: 0;
+	margin: 0;
+	font-size: 7px;
+}
+.method {
+	font-weight: normal;
+	font-size: 7px;
+	padding: 0 5;
+}
+.acceptance-criteria {
+	font-weight: normal;
+	font-size: 7px;
+	padding: 0 5;
+	margin: 0;
 }
 
 .header {

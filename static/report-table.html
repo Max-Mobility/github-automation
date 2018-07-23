@@ -6,9 +6,11 @@
   <tr>
 	<td>Requirement IDs</td>
 	<td colspan=10>
+	  <ul class="requirements-list">
 	  {{#each requirements}}
-	  <span style="horizontal-align: left">{{name}}: {{description}}</span>
+	  <li class="requirements">{{name}}: {{description}}</li>
 	  {{/each}}
+	  </ul>
 	</td>
   </tr>
   <tr>
@@ -30,13 +32,32 @@
   <tr>
 	{{/not-equals}}
 	<td colspan=2>{{name}}</td>
-	<td colspan=8>{{method}}</td>
+	<td colspan=8>
+	  {{preconditions}}
+	  <ul class="methods-list">
+	  {{#each methods}}
+	  <li class="method">{{this}}</li>
+	  {{/each}}
+	  </ul>
+	</td>
   </tr>
   {{/each}}
   <tr>
-	<td>Acceptance Criteria</td>
-	<td colspan=10>{{acceptanceCriteria}}</td>
+	<td rowspan={{tests.length}}>Acceptance Criteria</td>
+	{{#each tests}}
+	{{#not-equals @index 0}}
+  <tr>
+	{{/not-equals}}
+	<td colspan=2>{{name}}</td>
+	<td colspan=8>
+	  <ul class="acceptance-criteria-list">
+	  {{#each acceptanceCriteria}}
+	  <li class="acceptance-criteria">{{this}}</li>
+	  {{/each}}
+	  </ul>
+	</td>
   </tr>
+  {{/each}}
   <tr>
 	<td>Start / End Dates</td>
 	<td colspan=5>{{startDate}}</td>

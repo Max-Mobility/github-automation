@@ -108,7 +108,17 @@ function issueToReport(pattern, issue) {
 		tests: [
 			{
 				name: "Test 1",
-				method: "Steps for test 1 here",
+				preconditions: 'Test should be set up to be ....',
+				methods: [
+					"Step 1",
+					"step 2",
+					"step 3",
+				],
+				acceptanceCriteria: [
+					"output 1",
+					"output 2",
+					"output 3"
+				],
 				results: [
 					"PASS", "FAIL", "PASS", '','','',''
 				],
@@ -118,7 +128,17 @@ function issueToReport(pattern, issue) {
 			},
 			{
 				name: "Test 2",
-				method: "Steps for test 2 here",
+				preconditions: 'This test should be set up this way, here is a really long string to really test out how well the table scales and looks when we have so much here.',
+				methods: [
+					"Step 1",
+					"step 2",
+					"step 3",
+				],
+				acceptanceCriteria: [
+					"output 1",
+					"output 2",
+					"output 3"
+				],
 				results: [
 					"PASS", "PASS", "PASS", '','','',''
 				],
@@ -127,8 +147,6 @@ function issueToReport(pattern, issue) {
 				}
 			},
 		],
-		method: 'WRITE METHOD HERE',
-		acceptanceCriteria: 'WRITE ACCEPTANCE CRITERIA HERE',
 		startDate: moment().format('YYYY-MM-DD'),
 		endDate: moment().format('YYYY-MM-DD'),
 		testerName: 'WRITE YOUR NAME HERE',
