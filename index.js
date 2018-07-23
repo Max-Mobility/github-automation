@@ -61,8 +61,9 @@ parser.addArgument(
 );
 
 // load the templates
-var indexTempl = fs.readFileSync('./static/index.html', 'utf8');
-var style = fs.readFileSync('./static/style.css', 'utf8');
+var thisDir = __dirname;
+var indexTempl = fs.readFileSync(thisDir + '/static/index.html', 'utf8');
+var style = fs.readFileSync(thisDir + '/static/style.css', 'utf8');
 
 // parse the arguments
 var args = parser.parseArgs();

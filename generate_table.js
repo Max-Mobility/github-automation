@@ -3,6 +3,10 @@ const fs = require('fs');
 const _ = require('underscore');
 const handlebars = require('handlebars');
 
+// get our install folder
+var path = require('path') // npm install path
+var packagePath = __dirname;
+
 // our code
 const gh = require('./github');
 const utils = require('./lib/utils');
@@ -69,15 +73,15 @@ handlebars.registerHelper('add', function(a, b, options) {
 
 // requirements
 //   templates
-const requirementTableTemplateText = fs.readFileSync('./static/requirements-table.html').toString();
+const requirementTableTemplateText = fs.readFileSync(packagePath + '/static/requirements-table.html').toString();
 const requirementTableTemplate = handlebars.compile(requirementTableTemplateText);
 
 // testing
 //   partials
-const reportTableText = fs.readFileSync('./static/report-table.html').toString();
+const reportTableText = fs.readFileSync(packagePath+'/static/report-table.html').toString();
 handlebars.registerPartial('report-table', reportTableText);
 //   templates
-const testReportText = fs.readFileSync('./static/test-report.html').toString();
+const testReportText = fs.readFileSync(packagePath+'/static/test-report.html').toString();
 const testReportTemplate = handlebars.compile(testReportText);
 
 function generateMap(owner, repo, pattern) {
