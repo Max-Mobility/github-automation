@@ -150,7 +150,6 @@ function issueToReport(pattern, issue) {
 		startDate: moment().format('YYYY-MM-DD'),
 		endDate: moment().format('YYYY-MM-DD'),
 		testerName: 'WRITE YOUR NAME HERE',
-		output: 'OUTPUT TABLE HERE',
 		notes: 'WRITE YOUR NOTES HERE'
 	};
 }
