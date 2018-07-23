@@ -63,21 +63,25 @@ var style = fs.readFileSync('./static/style.css', 'utf8');
 // parse the arguments
 var args = parser.parseArgs();
 
-// now actually create the table
-//generate_table.generateRequirementTable(args.owner, args.repo, args.pattern).then((table) => {
-generate_table.generateTestReportTable(
-	args.owner,
-	args.repo,
-	args.pattern,
-	'A',
-	'Smart Evaluation App'
-).then((table) => {
-	// turn table into html
+var reqHtml = null;
+var reportHtml = null;
+
+// generate requirement table
+generate_table.generateRequirementHtml(args.owner, args.repo, args.pattern).then((_reqHtml) => {
+	reqHtml = _reqHtml;
+	// generate reports
+	return generate_table.generateReportHtml(args.owner, args.repo, args.pattern);
+}).then((_reportHtml) => {
+	reportHtml = _reportHtml;
+	// now render everything
+	var date = moment().format("YYYY-MM-DD");
 	const title = `${moment().format("YYYY-MM-DD")}.${args.pattern}`;
 	const html = handlebars.compile(indexTempl)({
 		title,
 		style,
-		table
+		date,
+		reqHtml,
+		reportHtml
 	});
 	const options = { format: 'Letter' };
 	const htmlName = `./${title}.html`;
@@ -86,7 +90,7 @@ generate_table.generateTestReportTable(
 	const pdfName = `./${title}.pdf`;
 	pdf.create(html, options).toFile(pdfName, function(err, res) {
 		if (err) return console.log(err);
-		console.log(`Wrote ${pdfName} - opening now`);
-		exec(getCommandLine() + ' ' + pdfName);
+		console.log(`Wrote ${pdfName}`);
+		//exec(getCommandLine() + ' ' + pdfName);
 	});
 });

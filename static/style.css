@@ -32,3 +32,28 @@ th {
 	color: white;
 	text-color: white;
 }
+
+.header {
+	margin: 30;
+}
+.subtitle,
+.doc-info {
+	padding: 20 0 20 0;
+}
+
+.revision-history {
+	margin: 30;
+}
+
+.title {
+	font-size: 26;
+}
+.location,
+.product-name,
+.doc-title {
+	font-size: 20;
+}
+.doc-number,
+.doc-fname{
+	font-size: 18;
+}

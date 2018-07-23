@@ -120,7 +120,7 @@ function generateMap(owner, repo, pattern) {
 
 // takes as input a list of labels - finds all the issues that have
 // labels matching pattern and puts them into a table
-function generateRequirementTable(owner, repo, pattern) {
+function generateRequirementHtml(owner, repo, pattern) {
 	return generateMap(owner, repo, pattern).then((reqs) => {
 		return requirementTableTemplate({ requirements: reqs });
 	});
@@ -128,12 +128,10 @@ function generateRequirementTable(owner, repo, pattern) {
 
 // takes as input a list of labels - finds all the issues that have
 // labels matching pattern and puts them into a table
-function generateTestReportTable(owner, repo, pattern, revision, softwareName) {
+function generateReportHtml(owner, repo, pattern) {
 	return generateMap(owner, repo, pattern).then((reqs) => {
 		// tests should be for a requirement and should have reports
 		return testReportTemplate({
-			revision,
-			softwareName,
 			tests: reqs
 		});
 	});
@@ -141,7 +139,8 @@ function generateTestReportTable(owner, repo, pattern, revision, softwareName) {
 
 // what are we exporting
 module.exports = {
-	generateRequirementTable,
-	generateTestReportTable,
+	generateRequirementHtml,
+	generateReportHtml,
+	generateMap,
 };
 
