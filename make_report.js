@@ -24,12 +24,12 @@ if (!files.directoryExists(dir)) {
 }
 
 const run = async () => {
+	const report = await inquirer.makeTestReport(requirements);
+	console.log(report);
 	/*
-  const credentials = await inquirer.makeTestReport(requirements);
-	console.log(credentials);
-	*/
 	const test = await inquirer.performTest();
 	console.log(test);
+	*/
 }
 
 const filelist = fs.readdirSync(dir);
