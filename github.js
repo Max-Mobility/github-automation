@@ -33,7 +33,8 @@ function scrapeLabels(opts) {
 	let owner = opts.owner;
 	let repo = opts.repo;
 	let listOpts = {
-		per_page: 10000
+		per_page: 10000,
+		AcceptHeader: "symmetra-preview+json"
 	};
 	return gh.getIssues(owner, repo).listLabels(listOpts).then((labels) => {
 		labels = labels.data;
@@ -58,6 +59,7 @@ function scrapeIssues(opts) {
 	let repo = opts.repo;
 	let listOpts = {
 		state: 'all',
+		AcceptHeader: "symmetra-preview+json",
 		labels: opts.filters.filter((f) => f.key == 'labels').map((f) => f.value).join()
 	};
 	return gh.getIssues(owner, repo).listIssues(listOpts).then((issues) => {
@@ -100,6 +102,7 @@ function issueToReport(pattern, issue) {
 			return p.test(l.name);
 		}),
 		description: issue.title,
+		revision: 'A',
 		// TODO:
 		tests: [
 			{
