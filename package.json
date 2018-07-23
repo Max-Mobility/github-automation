@@ -4,7 +4,7 @@
 	"description": "Automation tools for Design Control Procedures and Documents with Github Integration",
 	"bin": {
 		"gen_report_doc": "./index.js",
-		"run_test": "./make_report.js"
+		"perform_test": "./perform_test.js"
 	},
 	"main": "index.js",
 	"scripts": {

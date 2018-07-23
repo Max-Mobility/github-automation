@@ -25,11 +25,14 @@ if (!files.directoryExists(dir)) {
 
 const run = async () => {
 	const report = await inquirer.makeTestReport(requirements);
-	console.log(report);
-	/*
-	const test = await inquirer.performTest();
-	console.log(test);
-	*/
+	let fname = dir + "/SEA-SVR-" + report.testNumber + "-" + report.revision + ".json";
+	if (fs.existsSync(fname)) {
+		const suffix = ' (updated)';
+		console.log("File already exists at " + fname + ", appending" +suffix);
+		fname += suffix;
+	}
+	files.writeFile(fname, JSON.stringify(report, null, 2));
+	console.log("Wrote report " + fname);
 }
 
 const filelist = fs.readdirSync(dir);

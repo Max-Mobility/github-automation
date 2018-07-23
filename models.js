@@ -18,6 +18,7 @@ module.exports = {
 		preconditions: '',
 		methods: [],
 		acceptanceCriteria: [],
-		results: []
+		results: [],
+		finalResult: false
 	}
 };
