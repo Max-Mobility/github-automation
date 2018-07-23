@@ -3,6 +3,8 @@
 // libraries
 var sys = require('util');
 var exec = require('child_process').exec;
+#!/usr/bin/node
+
 const ArgumentParser = require('argparse').ArgumentParser;
 const moment = require('moment');
 const fs = require('fs');
