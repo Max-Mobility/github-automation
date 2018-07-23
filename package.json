@@ -24,11 +24,19 @@
   "homepage": "https://github.com/max-mobility/github-automation#readme",
   "dependencies": {
     "argparse": "^1.0.10",
+    "chalk": "^2.4.1",
+    "clear": "^0.1.0",
+    "clui": "^0.3.6",
+    "configstore": "^3.1.2",
     "es6-promise": "^4.2.4",
+    "figlet": "^1.2.0",
     "github-api": "^3.0.0",
     "handlebars": "^4.0.11",
     "html-pdf": "^2.2.0",
     "html-toc": "^2.0.0",
+    "inquirer": "^6.0.0",
+    "lodash": "^4.17.10",
+    "minimist": "^1.2.0",
     "moment": "^2.22.2",
     "underscore": "^1.9.1"
   }
