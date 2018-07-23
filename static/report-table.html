@@ -31,8 +31,8 @@
 	{{#not-equals @index 0}}
   <tr>
 	{{/not-equals}}
-	<td colspan=2>{{name}}</td>
-	<td colspan=8>
+	<td colspan=3>{{name}}</td>
+	<td colspan=7>
 	  {{preconditions}}
 	  <ul class="methods-list">
 	  {{#each methods}}
@@ -48,8 +48,8 @@
 	{{#not-equals @index 0}}
   <tr>
 	{{/not-equals}}
-	<td colspan=2>{{name}}</td>
-	<td colspan=8>
+	<td colspan=3>{{name}}</td>
+	<td colspan=7>
 	  <ul class="acceptance-criteria-list">
 	  {{#each acceptanceCriteria}}
 	  <li class="acceptance-criteria">{{this}}</li>
@@ -69,7 +69,7 @@
   </tr>
   <tr>
 	<td rowspan={{#add tests.length 2}}{{/add}} colspan=1>Output</td>
-	<td rowspan=2></td>
+	<td rowspan=2 colspan=2></td>
 	<td colspan=7>Sample quantity and test result</td>
 	<td rowspan=2 colspan=1>Pass/Fail</td>
   </tr>
@@ -84,7 +84,7 @@
   </tr>
   {{#each tests}}
   <tr>
-	<td>{{name}}</td>
+	<td colspan=2>{{name}}</td>
 	{{#each results}}
 	<td style="color: {{#resultColor this}}{{/resultColor}}">{{this}}</td>
 	{{/each}}
