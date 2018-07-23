@@ -33,6 +33,20 @@ th {
 	text-color: white;
 }
 
+ol {
+	font-weight: bold;
+	font-size: 15;
+	counter-reset: item;
+}
+
+li {
+  display: block
+}
+li:before {
+  content:counters(item, '.') '. ';
+  counter-increment: item
+}
+
 .header {
 	margin: 30;
 }
@@ -46,6 +60,7 @@ th {
 }
 
 .title {
+	font-weight: bold;
 	font-size: 26;
 }
 .location,

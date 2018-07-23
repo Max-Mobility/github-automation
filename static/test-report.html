@@ -1,11 +1,11 @@
 <ol>
   {{#each tests}}
   <li>
-	<h2>SEA-SVR-{{number}} {{name}}</h2>
+	SEA-SVR-{{number}} {{name}}
 	<ol>
 	  {{#each reports}}
 	  <li>
-		<h3>SEA-SVR-{{../number}}-{{number}}</h3>
+		SEA-SVR-{{../number}}-{{number}}
 		{{> report-table}}
 	  </li>
 	  {{/each}}
