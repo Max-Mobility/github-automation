@@ -1,10 +1,8 @@
-#!/usr/bin/env/node
-
-// libraries
-var sys = require('util');
-var exec = require('child_process').exec;
 #!/usr/bin/node
 
+// libraries
+const sys = require('util');
+const exec = require('child_process').exec;
 const ArgumentParser = require('argparse').ArgumentParser;
 const moment = require('moment');
 const fs = require('fs');

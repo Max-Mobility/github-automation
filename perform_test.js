@@ -1,6 +1,7 @@
 #!/usr/bin/node
 
 const fs = require("fs");
+const ArgumentParser = require('argparse').ArgumentParser;
 const chalk = require("chalk");
 const clear = require("clear");
 const figlet = require("figlet");
@@ -10,6 +11,47 @@ const _ = require('lodash');
 const gh = require('./github');
 const files = require('./lib/files');
 const inquirer  = require('./lib/inquirer');
+
+// command line arguments
+
+// set up command line arg parsing
+let parser = new ArgumentParser({
+	version: '0.0.1',
+	addHelp: true,
+	description: 'Github Automation'
+});
+parser.addArgument(
+	[ '-r', '--repo' ],
+	{
+		defaultValue: 'EvalApp',
+		help: 'Repository to scrape'
+	}
+);
+parser.addArgument(
+	[ '-o', '--owner' ],
+	{
+		defaultValue: 'PushTracker',
+		help: 'Owner of the repository'
+	}
+);
+parser.addArgument(
+	[ '-s', '--scrape' ],
+	{
+		action: 'storeTrue',
+		defaultValue: false,
+		help: 'Force scrape of the repo and update'
+	}
+);
+parser.addArgument(
+	[ '-p', '--pattern' ],
+	{
+		defaultValue: 'SEA-SRS',
+		help: 'A pattern that the labels on the issues should match'
+	}
+);
+
+// parse the arguments
+var args = parser.parseArgs();
 
 // where we save the reports
 const dir = 'reports'
@@ -33,13 +75,13 @@ const getReports = async () => {
 
 const getRequirements = async () => {
 	let reqs = [];
-	if (!fs.existsSync(reqFileName)) {
-		console.log("Couldn't find " + reqFileName + ", scraping github!");
+	if (!fs.existsSync(reqFileName) || args.scrape) {
+		console.log("Scraping github for labels according to '"+args.pattern+"'!");
 		reqs = await gh.scrapeLabels({
-			owner: 'PushTracker',
-			repo: 'EvalApp',
+			owner: args.owner,
+			repo: args.repo,
 			patterns: {
-				labels: 'SEA-SRS'
+				labels: args.pattern
 			}
 		});
 		reqs = reqs.map((l) => {
@@ -49,7 +91,6 @@ const getRequirements = async () => {
 				value: l.name
 			}
 		});
-		console.log("Wrote " + reqFileName);
 		fs.writeFileSync(reqFileName, JSON.stringify(reqs));
 		console.log("Wrote " + reqFileName);
 	} else {
