@@ -1,15 +1,13 @@
 <ol>
   {{#each tests}}
-  <li class="in-toc">
-	SEA-SVR-{{number}} {{name}}
+  <li><h5>SEA-SVR-{{number}} {{name}}</h5>
 	<ol>
 	  {{#each reports}}
-	  <li>
-		SEA-SVR-{{../number}}-{{number}}
+	  <li><h6>SEA-SVR-{{../number}}-{{number}}</h6>
 		{{> report-table}}
 	  </li>
 	  {{/each}}
+	</ol>
   </li>
-  </ol>
   {{/each}}
 </ol>

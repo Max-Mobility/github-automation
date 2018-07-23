@@ -6,6 +6,7 @@ const moment = require('moment');
 const fs = require('fs');
 const pdf = require('html-pdf');
 const handlebars = require('handlebars');
+const toc = require('html-toc');
 
 // our code
 const github = require('./github');
@@ -76,12 +77,16 @@ generate_table.generateRequirementHtml(args.owner, args.repo, args.pattern).then
 	// now render everything
 	var date = moment().format("YYYY-MM-DD");
 	const title = `${moment().format("YYYY-MM-DD")}.${args.pattern}`;
-	const html = handlebars.compile(indexTempl)({
+	let html = handlebars.compile(indexTempl)({
 		title,
 		style,
 		date,
 		reqHtml,
 		reportHtml
+	});
+	html = toc(html, {
+		selectors: 'h3,h4,h5,h6',
+		minLength: 3
 	});
 	const options = { format: 'Letter' };
 	const htmlName = `./${title}.html`;

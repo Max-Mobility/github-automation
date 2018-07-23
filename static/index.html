@@ -36,50 +36,78 @@
 	  </table>
 	</div>
 
-	<!-- TODO: add table of contents! -->
-
-	<!-- TODO: add executive summary! -->
-
-	<div class="table-of-contents">
+	<div id="toc" class="table-of-contents">
 	  Table of Contents
 	</div>
 
 	<div class="section executive-summary in-toc">
-	  Executive Summary
+	  <h3>Executive Summary</h3>
 	  <div class="paragraph">
-		This document specifies the software verification and validation test methods and results for the Smart Evaluation App.
+		This document specifies the software verification and
+		validation test methods and results for the Smart Evaluation
+		App.
 	  </div>
 	</div>
 
 	<ol class="section">
 	  <li class="in-toc">
-		Introduction
+		<h3>Introduction</h3>
 		<ol>
-		  <li class="in-toc">Overview
+		  <li class="in-toc"><h4>Overview</h4>
 			<div class="paragraph">
+			  Testing will be conducted to determine that the software
+			  meets its requirements as specified in the following
+			  documents:
+			  <div>
+				<span class="paragraph">Software Requirements Specification</span>
+			  </div>
 			</div>
 		  </li>
-		  <li class="in-toc">Test Platform
+		  <li class="in-toc"><h4>Test Platform</h4>
 			<div class="paragraph">
+			  Unless specified otherwise by the individual test
+			  method, all tests are performed on a compatible Android
+			  SmartPhone and iPhone.
 			</div>
 		  </li>
-		  <li class="in-toc">Test Level
+		  <li class="in-toc"><h4>Test Level</h4>
 			<div class="paragraph">
+			  Software Item - this test level verifies the correct
+			  operation of each software unit contained within the
+			  software item. No additional system hardware is required
+			  to complete this level of verification.
+			</div>
+			<div class="paragraph">
+			  External Software Interface - this test level verifies
+			  the correct operation of each external software
+			  interface. The system under test will be verified
+			  against an applicable external interface device as
+			  specified in the test method.
+			</div>
+			<div class="paragraph">
+			  System - this test level verifies the correct operation
+			  of the software through the entire system. System level
+			  activities such as event sequence tests are performed in
+			  a controlled environment by system integrators.
 			</div>
 		  </li>
 		</ol>
 	  </li>
-	  <li class="in-toc">
-		Software Requirement Table
+
+	  <li class="in-toc"><h3>Software Requirement Table</h3>
 		{{{reqHtml}}}
 	  </li>
 
-	  <li class="in-toc">
-		Software Verification and Validation Test Reports
+	  <li class="in-toc"><h3>Software Verification and Validation Test Reports</h3>
 		{{{reportHtml}}}
 	  </li>
-	  <li class="in-toc">
-		Conclusions
+
+	  <li class="in-toc"><h3>Conclusions</h3>
+		<div class="paragraph">
+		  All tests have been performed and all acceptance criteria
+		  for each test have been met, therefore the software V&V has
+		  concluded with all tests passing.
+		</div>
 	  </li>
 	</ol>
   </body>

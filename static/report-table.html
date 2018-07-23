@@ -20,15 +20,19 @@
 	<td colspan=10>{{description}}</td>
   </tr>
   <tr>
+	<td>Test Level</td>
+	<td colspan=10>{{testLevel}}</td>
+  </tr>
+  <tr>
 	<td rowspan={{tests.length}}>Method</td>
 	{{#each tests}}
 	{{#not-equals @index 0}}
-	<tr>
+  <tr>
 	{{/not-equals}}
 	<td colspan=2>{{name}}</td>
 	<td colspan=8>{{method}}</td>
   </tr>
-	{{/each}}
+  {{/each}}
   <tr>
 	<td>Acceptance Criteria</td>
 	<td colspan=10>{{acceptanceCriteria}}</td>

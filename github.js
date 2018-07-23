@@ -101,8 +101,9 @@ function issueToReport(pattern, issue) {
 			const p = new RegExp(pattern);
 			return p.test(l.name);
 		}),
-		description: issue.title,
 		revision: 'A',
+		description: issue.title,
+		testLevel: 'Software Item',
 		// TODO:
 		tests: [
 			{
