@@ -1,4 +1,5 @@
 // library code
+const moment = require('moment');
 const fs = require('fs');
 const _ = require('underscore');
 const handlebars = require('handlebars');
@@ -53,6 +54,31 @@ handlebars.registerHelper('testColor', function(tests, options) {
 		return 'green';
 	} else {
 		return 'red';
+	}
+});
+
+handlebars.registerHelper('initials', function(name, options) {
+	name = name || '';
+	return name.split(' ').reduce((i, n) => {
+		return i + n[0].toUpperCase();
+	}, '');
+});
+
+handlebars.registerHelper('startDate', function(tests, options) {
+	if (this.startDate) return this.startDate;
+	if (tests && tests.length) {
+		return moment.min(tests.map((t) => moment(t.startDate))).format("YYYY-MM-DD");
+	} else {
+		return 'N/A';
+	}
+});
+
+handlebars.registerHelper('endDate', function(tests, options) {
+	if (this.endDate) return this.endDate;
+	if (tests && tests.length) {
+		return moment.max(tests.map((t) => moment(t.endDate))).format("YYYY-MM-DD");
+	} else {
+		return 'N/A';
 	}
 });
 

@@ -37,16 +37,21 @@ h1, h2, h3, h4, h5, h6 {
 	display: inline;
 }
 
-ol {
+.main-list {
 	font-weight: bold;
 	font-size: 15;
 	counter-reset: item;
 }
 
-ol li {
+.appendix {
+	font-weight: bold;
+	font-size: 15;
+}
+
+.main-list-li {
   display: block
 }
-ol li:before {
+.main-list-li:before {
   content:counters(item, '.') '. ';
   counter-increment: item
 }
@@ -54,10 +59,6 @@ ol li:before {
 ul {
 	padding: 0 15;
 	list-style-type: none;
-}
-ul li:before {
-	content: unset;
-	counter-increment: unset;
 }
 
 .methods-list,
