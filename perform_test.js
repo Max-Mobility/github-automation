@@ -92,16 +92,21 @@ const run = async () => {
 	// where we save the reports
 	const dir = 'reports'
 	let reports = utils.getReports(dir);
+	// select the test
+	const test = await inquirer.selectTest(reports);
 	// make a new report
-	const report = await inquirer.makeTestReport(requirements);
+	const report = await inquirer.makeTestReport(test.reports, requirements);
+	test.reports.push(report);
 	// now output the new report
-	let fname = dir + "/SEA-SVR-" + report.testNumber + "-" + report.revision + ".json";
+	let fname = dir + "/SEA-SVR-" + test.number + ".json";
+	/*
 	if (fs.existsSync(fname)) {
 		const suffix = ' (updated)';
 		console.log("File already exists at " + fname + ", appending" +suffix);
 		fname += suffix;
 	}
-	files.writeFile(fname, JSON.stringify(report, null, 2));
+	*/
+	files.writeFile(fname, JSON.stringify(test, null, 2));
 	console.log("Wrote report " + fname);
 }
 
