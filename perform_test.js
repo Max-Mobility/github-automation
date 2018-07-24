@@ -44,6 +44,13 @@ parser.addArgument(
 	}
 );
 parser.addArgument(
+	[ '-f', '--folder' ],
+	{
+		defaultValue: './reports',
+		help: 'Path to the reports folder containing test report json files.'
+	}
+);
+parser.addArgument(
 	[ '-p', '--pattern' ],
 	{
 		defaultValue: 'SEA-SRS',
@@ -87,13 +94,14 @@ const getRequirements = async () => {
 }
 
 const run = async () => {
-	// get the requirements
-	let requirements = await getRequirements();
 	// where we save the reports
-	const dir = 'reports'
+	const dir = args.folder;
+	// now get the reports
 	let reports = utils.getReports(dir);
 	// select the test
 	const test = await inquirer.selectTest(reports);
+	// get the requirements
+	let requirements = await getRequirements();
 	// make a new report
 	const report = await inquirer.makeTestReport(test.reports, requirements);
 	test.reports.push(report);
