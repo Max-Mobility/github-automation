@@ -84,7 +84,19 @@ handlebars.registerHelper('endDate', function(tests, options) {
 
 handlebars.registerHelper('reportResults', function(tests, options) {
 	var passes = tests.reduce((p, t) => {
-		return p && t.finalResult;
+		return t.finalResult && p;
+	}, true);
+	if (passes) {
+		return 'PASS';
+	} else {
+		return 'FAIL';
+	}
+});
+
+handlebars.registerHelper('testResult', function(reports, options) {
+	if (!reports || !reports.length) return 'N/A';
+	var passes = reports.reduce((p, r) => {
+		return p && r.tests.reduce((_p, t) => t.finalResult && _p, true);
 	}, true);
 	if (passes) {
 		return 'PASS';

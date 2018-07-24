@@ -1,0 +1,58 @@
+<table>
+  <tr>
+	<th>Test ID</th>
+	<th>Test Name</th>
+	<th>Test End Date</th>
+	<th>Test Result</th>
+  </tr>
+  {{#each tests}}
+  <tr>
+	<td style="font-weight: bold; font-size: 8;">SEA-SVR-{{number}}</td>
+	<td>{{name}}</td>
+	<td>{{#endDate reports}}{{/endDate}}</td>
+	<td>{{#testResult reports}}{{/testResult}}</td>
+  </tr>
+  {{/each}}
+</table>
+
+{{#each tests}}
+<table>
+  <tr>
+	<td colspan=8 style="text-align: center">SEA-SVR-{{number}} {{name}}</td>
+  </tr>
+  <tr>
+	<th>Index</th>
+	<th>Requirement IDs</th>
+	<th>Description</th>
+	<th>Test Level</th>
+	<!--<th>Acceptance Criteria</th>-->
+	<th>Start Date</th>
+	<th>End Date</th>
+	<th>Test Results</th>
+	<!--<th>Test Report ID</th>-->
+	<th>Tester Initials</th>
+	<!--<th>Notes</th>-->
+  </tr>
+  {{#each reports}}
+  <tr>
+	<td style="font-weight: bold; font-size: 8;">{{number}}</td>
+	<td>
+	  <ul class="requirements-list">
+		{{#each requirements}}
+		<li class="requirements">{{name}}</li>
+		{{/each}}
+	  </ul>
+	</td>
+	<td>{{description}}</td>
+	<td>{{testLevel}}</td>
+	<!--<td>ACCEPTANCE CRITERIA</td>-->
+	<td>{{startDate}}</td>
+	<td>{{endDate}}</td>
+	<td style="color: {{#testColor tests}}{{/testColor}}">{{#reportResults tests}}{{/reportResults}}</td>
+	<!--<td >SEA-SVR-{{../number}}-{{number}}</td>-->
+	<td>{{#initials testerName}}{{/initials}}</td>
+	<!--<td>NOTES</td>-->
+  </tr>
+  {{/each}}
+</table>
+{{/each}}
