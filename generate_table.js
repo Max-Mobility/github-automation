@@ -83,6 +83,8 @@ handlebars.registerPartial('report-table', reportTableText);
 //   templates
 const testReportText = fs.readFileSync(packagePath+'/static/test-report.html').toString();
 const testReportTemplate = handlebars.compile(testReportText);
+const testTableText = fs.readFileSync(packagePath+'/static/test-table.html').toString();
+const testTableTemplate = handlebars.compile(testTableText);
 
 function generateMap(owner, repo, pattern) {
 	let labels = [];
@@ -128,12 +130,18 @@ function scrapeReportHtml(owner, repo, pattern) {
 	});
 }
 
-// takes as input a list of labels - finds all the issues that have
-// labels matching pattern and puts them into a table
-function generateReportHtml(requirements) {
+function generateReportHtml(reports) {
 	return new Promise((resolve, reject) => {
 		resolve(testReportTemplate({
-			tests: requirements
+			tests: reports
+		}));
+	});
+}
+
+function generateTestHtml(reports) {
+	return new Promise((resolve, reject) => {
+		resolve(testTableTemplate({
+			tests: reports
 		}));
 	});
 }
@@ -143,6 +151,7 @@ module.exports = {
 	scrapeRequirementHtml,
 	scrapeReportHtml,
 	generateReportHtml,
+	generateTestHtml,
 	generateMap,
 };
 

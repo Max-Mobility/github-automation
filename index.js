@@ -70,16 +70,19 @@ var args = parser.parseArgs();
 
 var reqHtml = null;
 var reportHtml = null;
+var testHtml = null;
+var reports = null;
 
 // generate requirement table
 generate_table.scrapeRequirementHtml(args.owner, args.repo, args.pattern).then((_reqHtml) => {
 	reqHtml = _reqHtml;
-	// generate reports
-	//return generate_table.scrapeReportHtml(args.owner, args.repo, args.pattern);
-	var reports = utils.getReports('reports');
+	reports = utils.getReports('reports');
 	return generate_table.generateReportHtml(reports);
 }).then((_reportHtml) => {
 	reportHtml = _reportHtml;
+	return generate_table.generateTestHtml(reports);
+}).then((_testHtml) => {
+	testHtml = _testHtml;
 	// now render everything
 	var date = moment().format("YYYY-MM-DD");
 	const title = `${moment().format("YYYY-MM-DD")}.${args.pattern}`;
@@ -88,7 +91,8 @@ generate_table.scrapeRequirementHtml(args.owner, args.repo, args.pattern).then((
 		style,
 		date,
 		reqHtml,
-		reportHtml
+		reportHtml,
+		testHtml
 	});
 	html = toc(html, {
 		selectors: 'h3,h4,h5,h6',
