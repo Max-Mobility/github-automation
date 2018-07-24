@@ -1,9 +1,9 @@
 <ol class="main-list">
   {{#each tests}}
-  <li class="in-toc main-list-li"><h5>SEA-SVR-{{number}} {{name}}</h5>
+  <li class="in-toc main-list-li"><h4>SEA-SVR-{{number}} {{name}}</h4>
 	<ol class="main-list">
 	  {{#each reports}}
-	  <li class="in-toc main-list-li"><h6>SEA-SVR-{{../number}}-{{number}}</h6>
+	  <li class="in-toc main-list-li"><h5>SEA-SVR-{{../number}}-{{number}}</h5>
 		{{> report-table}}
 	  </li>
 	  {{/each}}

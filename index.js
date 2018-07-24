@@ -95,7 +95,7 @@ generate_table.scrapeRequirementHtml(args.owner, args.repo, args.pattern).then((
 		testHtml
 	});
 	html = toc(html, {
-		selectors: 'h3,h4,h5,h6',
+		selectors: 'h3,h4',
 		minLength: 3
 	});
 	const options = { format: 'Letter' };
