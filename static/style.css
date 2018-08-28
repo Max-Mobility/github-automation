@@ -40,6 +40,20 @@ h1, h2, h3, h4, h5, h6 {
 	display: inline;
 }
 
+.signatures {
+	margin: auto;
+	height: 10%;
+	width: 80%;
+}
+.sign {
+	display: table-cell;
+	width: 30%;
+	margin: 10px;
+	padding: 10px;
+}
+.sign hr {
+}
+
 .main-list {
 	font-weight: bold;
 	font-size: 15;
