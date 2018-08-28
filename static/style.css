@@ -11,6 +11,9 @@ html, body {
     -webkit-print-color-adjust: exact;
     box-sizing: border-box;
 }
+footer {
+	page-break-after: always;
+}
 table {
 	margin: 10;
 	height: auto;
