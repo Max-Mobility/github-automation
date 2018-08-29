@@ -83,6 +83,8 @@ generate_table.scrapeRequirementHtml(args.owner, args.repo, args.pattern).then((
 	return generate_table.generateTestHtml(reports);
 }).then((_testHtml) => {
 	testHtml = _testHtml;
+	// get revision history
+	let revisions = utils.getRevisions('reports');
 	// now render everything
 	var date = moment().format("YYYY-MM-DD");
 	const title = `${moment().format("YYYY-MM-DD")}.${args.pattern}`;
@@ -90,6 +92,7 @@ generate_table.scrapeRequirementHtml(args.owner, args.repo, args.pattern).then((
 		title,
 		style,
 		date,
+		revisions,
 		reqHtml,
 		reportHtml,
 		testHtml

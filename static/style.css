@@ -7,7 +7,6 @@ html, body {
     font-family: 'Sackers Gothic Std';
     font-weight: 500;
     font-size: 7px;
-    background: rgb(241,241,241);
     -webkit-print-color-adjust: exact;
     box-sizing: border-box;
 }

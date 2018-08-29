@@ -27,12 +27,14 @@
 		  <th>Description of Revision</th>
 		  <th>Revision Author</th>
 		</tr>
+		{{#each revisions}}
 		<tr>
-		  <td>DRAFT</td>
+		  <td>{{level}}</td>
 		  <td>{{date}}</td>
-		  <td>Draft</td>
-		  <td>William Emfinger</td>
+		  <td>{{description}}</td>
+		  <td>{{author}}</td>
 		</tr>
+		{{/each}}
 	  </table>
 	</div>
 
