@@ -55,7 +55,7 @@ parser.addArgument(
 parser.addArgument(
 	[ '-p', '--pattern' ],
 	{
-		defaultValue: 'SEA-SRS',
+		defaultValue: 'SD2-SRS',
 		help: 'A pattern that the labels on the issues should match'
 	}
 );

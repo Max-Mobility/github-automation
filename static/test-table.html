@@ -7,7 +7,7 @@
   </tr>
   {{#each tests}}
   <tr>
-	<td style="font-weight: bold; font-size: 8;">SEA-SVR-{{number}}</td>
+	<td style="font-weight: bold; font-size: 8;">SD2-SVR-{{number}}</td>
 	<td>{{name}}</td>
 	<td>{{#endDate reports}}{{/endDate}}</td>
 	<td>{{#testResult reports}}{{/testResult}}</td>
@@ -18,7 +18,7 @@
 {{#each tests}}
 <table>
   <tr>
-	<td colspan=8 style="font-weight: bold; font-size: 13; text-align: center">SEA-SVR-{{number}} {{name}}</td>
+	<td colspan=8 style="font-weight: bold; font-size: 13; text-align: center">SD2-SVR-{{number}} {{name}}</td>
   </tr>
   <tr>
 	<th>Index</th>
@@ -49,7 +49,7 @@
 	<td>{{startDate}}</td>
 	<td>{{endDate}}</td>
 	<td style="color: {{#testColor tests}}{{/testColor}}">{{#reportResults tests}}{{/reportResults}}</td>
-	<!--<td >SEA-SVR-{{../number}}-{{number}}</td>-->
+	<!--<td >SD2-SVR-{{../number}}-{{number}}</td>-->
 	<td>{{#initials testerName}}{{/initials}}</td>
 	<!--<td>NOTES</td>-->
   </tr>

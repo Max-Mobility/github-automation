@@ -53,7 +53,7 @@ parser.addArgument(
 parser.addArgument(
 	[ '-p', '--pattern' ],
 	{
-		defaultValue: 'SEA-SRS',
+		defaultValue: 'SD2-SRS',
 		help: 'A pattern that the labels on the issues should match'
 	}
 );
@@ -106,7 +106,7 @@ const run = async () => {
 	const report = await inquirer.makeTestReport(test.reports, requirements);
 	test.reports.push(report);
 	// now output the new report
-	let fname = dir + "/SEA-SVR-" + test.number + ".json";
+	let fname = dir + "/SD2-SVR-" + test.number + ".json";
 	/*
 	if (fs.existsSync(fname)) {
 		const suffix = ' (updated)';
