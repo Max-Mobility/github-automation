@@ -43,7 +43,7 @@
 		"inquirer-autocomplete-prompt": "^1.0.1",
 		"inquirer-checkbox-plus-prompt": "^1.0.1",
 		"lodash": "^4.17.13",
-		"minimist": "^1.2.0",
+		"minimist": "^1.2.3",
 		"moment": "^2.22.2",
 		"underscore": "^1.9.1"
 	}
